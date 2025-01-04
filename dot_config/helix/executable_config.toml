@@ -1,0 +1,80 @@
+theme = "ayu_evolve"
+[editor]
+auto-completion = true
+auto-format = true
+auto-info = true
+auto-pairs = true
+bufferline = "always"
+color-modes = true
+completion-replace = true
+completion-timeout = 5
+completion-trigger-len = 2
+cursorcolumn = false
+cursorline = true
+default-line-ending = "native"
+gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+idle-timeout = 250
+indent-heuristic = "hybrid"
+insert-final-newline = true
+jump-label-alphabet = "asdfgjklqweruiopzxcv"
+line-number = "absolute"
+middle-click-paste = true
+mouse = true
+popup-border = "all"
+preview-completion-insert = true
+rulers = [120]
+scroll-lines = 3
+scrolloff = 5
+text-width = 80
+true-color = true
+undercurl = false
+
+[editor.cursor-shape]
+
+[editor.file-picker]
+hidden = false
+
+[editor.indent-guides]
+character = "▏"
+render = true
+
+[editor.lsp]
+auto-signature-help = false
+display-messages = true
+
+[editor.statusline]
+center = ["file-name"]
+left = ["mode", "spinner"]
+right = ["diagnostics", "selections", "position", "file-encoding", "position-percentage", "file-type"]
+separator = " "
+
+[editor.statusline.mode]
+insert = "INSERT"
+normal = "NORMAL"
+select = "SELECT"
+
+[keys]
+[keys.normal]
+"A-," = "goto_previous_buffer"
+"A-." = "goto_next_buffer"
+"A-/" = "repeat_last_motion"
+A-h = "goto_previous_buffer"
+A-j = "goto_previous_buffer"
+A-k = "goto_next_buffer"
+A-l = "goto_next_buffer"
+A-w = ":buffer-close"
+A-x = "extend_to_line_bounds"
+D = "delete_char_backward"
+X = ["extend_line_up", "extend_to_line_bounds"]
+ret = ["move_line_down", "goto_first_nonwhitespace"]
+
+[keys.normal.Z]
+Q = ":quit!"
+Z = ":write-quit!"
+
+[keys.normal.g]
+a = "code_action"
+
+[keys.select]
+A-x = "extend_to_line_bounds"
+X = ["extend_line_up", "extend_to_line_bounds"]
