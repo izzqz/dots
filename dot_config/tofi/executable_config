@@ -1,0 +1,46 @@
+font = /home/izzqz/.fonts/CozetteVector.ttf
+font-size = 16
+hint-font = false
+anchor = bottom-left
+
+corner-radius = 6
+width = 60%
+height = 28
+horizontal = true
+
+matching-algorithm=fuzzy
+
+text-cursor = true
+text-cursor-style = block
+text-cursor-style = block
+text-cursor-thickness = 1
+
+hide-cursor=true
+# placeholder-text = ""
+prompt-text = ":"
+outline-width = 0
+border-width = 0
+min-input-width = 128
+
+ascii-input = true
+
+# num-results = 5
+result-spacing = 20
+selection-background-padding = 0,10,1
+selection-background-corner-radius = 0
+
+default-result-background-padding = 10
+alternate-result-background-padding = 10
+
+exclusive-zone=-1
+
+padding-top = 2
+padding-bottom = 0
+padding-left = 2
+padding-right = 1
+margin-top=0
+margin-bottom=0
+margin-left=0
+margin-right=0
+
+include = colors

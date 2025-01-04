@@ -1,0 +1,5 @@
+# swayfx specifics
+
+blur enabled
+blur_radius 5
+default_border pixel 4

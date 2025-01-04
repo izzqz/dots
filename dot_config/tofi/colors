@@ -1,0 +1,10 @@
+# foreground color
+selection-color = #212121
+background-color = #212121
+
+# background color
+selection-background = #ffffff
+border-color = #ffffff
+text-cursor-color = #ffffff
+text-cursor-background = #ffffff
+

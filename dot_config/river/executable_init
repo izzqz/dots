@@ -1,0 +1,156 @@
+#!/bin/sh
+
+mod="Mod4"
+
+riverctl declare-mode layout
+
+# Move focus between windows
+riverctl map normal $mod j focus-view next
+riverctl map normal $mod k focus-view previous
+
+# Swap windows
+riverctl map normal $mod+Shift j swap next
+riverctl map normal $mod+Shift k swap previous
+riverctl map normal $mod+Shift h zoom
+
+# Floating move & resize
+riverctl map normal $mod+Control h move left  10
+riverctl map normal $mod+Control j move down  10
+riverctl map normal $mod+Control k move up    10
+riverctl map normal $mod+Control l move right 10
+
+riverctl map normal $mod+Control+Shift h resize horizontal -10
+riverctl map normal $mod+Control+Shift j resize vertical   -10
+riverctl map normal $mod+Control+Shift k resize vertical   10
+riverctl map normal $mod+Control+Shift l resize horizontal 10
+
+# Resize columns
+riverctl map normal $mod h send-layout-cmd rivertile 'main-ratio -0.05'
+riverctl map normal $mod l send-layout-cmd rivertile 'main-ratio +0.05'
+
+# Layout
+riverctl map normal $mod o enter-mode layout
+riverctl map layout $mod o enter-mode normal
+
+riverctl map layout $mod t send-layout-cmd rivertile 'main-location top'
+riverctl map layout $mod l send-layout-cmd rivertile 'main-location left'
+
+riverctl map layout $mod minus send-layout-cmd rivertile 'main-count -1'
+riverctl map layout $mod equal send-layout-cmd rivertile 'main-count +1'
+
+# Move floating windows with mouse
+riverctl map-pointer normal $mod BTN_LEFT move-view
+riverctl map-pointer normal $mod BTN_RIGHT resize-view
+
+# Toggle floating
+riverctl map normal $mod Space toggle-float
+
+# Quick launchers
+riverctl map normal $mod Return spawn footclient
+riverctl map normal $mod Backspace spawn foot
+
+# Start application launcher
+riverctl map normal $mod D spawn 'tofi-run | xargs riverctl spawn'
+
+# Fullscreen a view
+riverctl map normal $mod F toggle-fullscreen
+
+# Close current window
+riverctl map normal $mod Q close
+
+# Dismiss all notifications
+riverctl map normal $mod+Shift D spawn 'fnottctl dismiss -a'
+
+riverctl map normal $mod+Shift S spawn 'grim -g "$(slurp)" - | wl-copy'
+
+# Player controls
+riverctl map normal $mod P spawn player-menu
+riverctl map normal $mod bracketleft spawn 'playerctl-mod previous'
+riverctl map normal $mod backslash spawn 'playerctl-mod play-pause'
+riverctl map normal $mod bracketright spawn 'playerctl-mod next'
+
+# Volume stuff
+riverctl map normal $mod+Shift bracketright spawn 'amixer set Master 5%+'
+riverctl map normal $mod+Shift bracketleft  spawn 'amixer set Master 5%-'
+
+# Useful symbols
+riverctl map normal $mod N spawn 'digraph-menu type'
+riverctl map normal $mod+Shift N spawn 'digraph-menu copy'
+
+# Emoji
+riverctl map normal $mod M spawn 'emoji-menu type'
+riverctl map normal $mod+Shift M spawn 'emoji-menu copy'
+
+# Copy password
+riverctl map normal $mod apostrophe spawn pass-menu
+riverctl map normal $mod semicolon spawn himitsu-menu
+
+# "Now it's safe to turn off your computer"
+riverctl map normal $mod+Shift Q spawn shutdown-menu
+
+# Tags
+for tag in $(seq 1 9); do
+	# I honestly don't know what is this magic but it works
+	tagmask=$((1 << ($tag - 1)))
+
+	riverctl map normal $mod               $tag set-focused-tags $tagmask
+	riverctl map normal $mod+Shift         $tag set-view-tags $tagmask
+	riverctl map normal $mod+Control       $tag toggle-focused-tags $tagmask
+	riverctl map normal $mod+Shift+Control $tag toggle-view-tags $tagmask
+done
+
+# "Scratchpad"
+# Actually is a tenth workspace
+riverctl map normal $mod minus 'set-view-tags'     $((1 << (10 - 1)))
+riverctl map normal $mod equal toggle-focused-tags $((1 << (10 - 1)))
+
+## Options
+# Focus follows cursor
+riverctl focus-follows-cursor normal
+
+# Border colors
+riverctl border-color-unfocused '0x282c34'
+riverctl border-color-focused '0xa2b0c4'
+
+# Cursor theme?
+riverctl xcursor-theme Adwaita
+
+# Input
+riverctl keyboard-layout \
+	-options caps:super,grp:alt_shift_toggle,compose:ralt \
+	us,ru
+
+# No client-side decoration thanks
+riverctl rule-add ssd
+
+riverctl set-repeat 50 300
+
+# Autostart
+autostart() {
+	killall -q "$1"
+	riverctl spawn "$*"
+}
+
+# Layout
+pgrep rivertile >/dev/null \
+	|| riverctl spawn 'rivertile -main-location left -view-padding 0 -outer-padding 0'
+riverctl default-layout rivertile
+
+dbus-update-activation-environment \
+DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE
+
+riverctl spawn "wlr-randr --output eDP-1 --scale 2"
+# riverctl spawn ""
+
+touchpad="pointer-1739-52619-SYNA8004:00_06CB:CD8B_Touchpad"
+riverctl input $touchpad tap enabled
+riverctl input $touchpad events disabled-on-external-mouse
+riverctl input $touchpad accel-profile adaptive
+riverctl input $touchpad natural-scroll enabled
+
+sleep 1;
+
+# usage: dam [-st] [-f font] [-nb color] [-nf color] [-sb color] [-sf color]
+autostart 'i3status-rs | ~/.config/river/scripts/i3bar-parse | dam -t -f "JetBrainsMono Nerd Font" -nb 282828 -nf ffffff -sb 545454 -sf ffffff'
+autostart fnott
+autostart foot --server

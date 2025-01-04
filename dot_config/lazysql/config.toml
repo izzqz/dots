@@ -1,0 +1,5 @@
+[[database]]
+Name = 'strapi dev'
+Provider = 'sqlite3'
+DBName = ''
+URL = '/home/izzqz/proj/mos/tests/init.db'

@@ -1,0 +1,25 @@
+[user]
+	name = izzqz
+	email = v@izzqz.me
+	signingkey = 27BBEDAE6A61A71E52C5F470FC8157A92565C9EF # gitleaks:allow
+[core]
+	editor = hx
+    pager = delta
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = true
+
+[interactive]
+    external = difft
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[cinnabar]
+	version-check = 1729511090

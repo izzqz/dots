@@ -1,0 +1,543 @@
+exit
+nu
+ls
+exit
+nmcli -f 'ssid' --color yes device wifi
+nmcli -f
+printf '%s' "$(nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi)" | \<\n>jq -sR 'split("\n") | map(split(":")) | map({"network": .[0],<\n>                                             "mode": .[1],<\n>                                             "channel": .[2],<\n>                                             "rate": .[3],<\n>                                             "signal": .[4],<\n>                                             "bars": .[5],<\n>                                             "security": .[6]})'<\n>
+exit
+nmcli -f 'bars,ssid' --color no device wifi
+nmcli -f 'bars,ssid' --color no device wifi | sort
+nmcli -f 'bars,ssid' --color no device wifi | sort | fuzzel
+nmcli -f 'bars,ssid' --color no device wifi | sort | fuzzel --dmenu
+nmcli --color no device wifi | sort | fuzzel --dmenu
+nmcli --color no device wifi | sort
+nmcli device wifi
+nmcli device wifi | sort
+nmcli device wifi list
+nmcli device wifi list | table
+nmcli device wifi list | table | sort-by signal
+nmcli device wifi list | table 
+nmcli device wifi list | table
+nmcli device wifi list --json
+nmcli device wifi list --help
+nmcli device --help wifi list
+nmcli device wifi list
+nmcli device wifi list | table
+nmcli device wifi list | parec 
+nmcli device wifi list | parse 
+nmcli device wifi list
+nmcli device wifi list | echo
+nmcli device wifi list | cat
+nmcli device wifi list | parse '{in-use} {nssid} {ssid} {mode}'
+nmcli device wifi list | from csv 
+nmcli device wifi list | from csv | sort-by signal
+nmcli device wifi list | from csv | sort-by SIGNAL
+nmcli device wifi list | from csv
+nmcli device wifi list | from csv | sort
+nmcli device wifi list | from csv | first 5
+nmcli device wifi list | from csv | get SIGNAL
+nmcli device wifi list | from csv | columns 
+nmcli device wifi list | from tsv 
+nmcli device wifi list | from tsv | columns 
+ls
+nmcli device wifi list | from tsv | columns 
+nmcli device wifi list | from tsv
+printf '%s' "$(nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi)" | \<\n>jq -sR 'split("\n") | map(split(":")) | map({"network": .[0],<\n>                                             "mode": .[1],<\n>                                             "channel": .[2],<\n>                                             "rate": .[3],<\n>                                             "signal": .[4],<\n>                                             "bars": .[5],<\n>                                             "security": .[6]})'<\n>
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | awk -F: 'BEGIN{z[1]="network";z[2]="mode";z[3]="channel";z[4]="rate";z[5]="signal";z[6]="bars";z[7]="security";}{if (NR==1){printf "%s", "[{"}else{printf "%s",",{"}}{for (i=1; i<NF; i++){ printf "\"%s\":\"%s\",",z[i],$i};{ printf "\"%s\":\"%s\"}",z[NF],$NF}}END{print "]"}' | jq .
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | awk -F: 'BEGIN{z[1]="network";z[2]="mode";z[3]="channel";z[4]="rate";z[5]="signal";z[6]="bars";z[7]="security";}{if (NR==1){printf "%s", "[{"}else{printf "%s",",{"}}{for (i=1; i<NF; i++){ printf "\"%s\":\"%s\",",z[i],$i};{ printf "\"%s\":\"%s\"}",z[NF],$NF}}END{print "]"}' | jq . | from json
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | awk -F: 'BEGIN{z[1]="network";z[2]="mode";z[3]="channel";z[4]="rate";z[5]="signal";z[6]="bars";z[7]="security";}{if (NR==1){printf "%s", "[{"}else{printf "%s",",{"}}{for (i=1; i<NF; i++){ printf "\"%s\":\"%s\",",z[i],$i};{ printf "\"%s\":\"%s\"}",z[NF],$NF}}END{print "]"}' | jq . | from json | sort
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | awk -F: 'BEGIN{z[1]="network";z[2]="mode";z[3]="channel";z[4]="rate";z[5]="signal";z[6]="bars";z[7]="security";}{if (NR==1){printf "%s", "[{"}else{printf "%s",",{"}}{for (i=1; i<NF; i++){ printf "\"%s\":\"%s\",",z[i],$i};{ printf "\"%s\":\"%s\"}",z[NF],$NF}}END{print "]"}' | jq . | from json | uniq-by network
+ls
+cd
+ls
+cd test_env/
+touch selector.nu
+hx selector.nu
+./selector.nu
+nmcli -f in-use,bssid,ssid,mode,chan,rate,signal,bars,security -t dev wifi | jq -sR 'split("\n") | map(split("(?<!\\\\):"; "g")) | map({"in-use": .[0], "bssid": .[1], "network": .[2], "mode": .[3], "channel": .[4], "rate": .[5], "signal": .[6], "bars": .[7], "security": .[8]}) | .[0:-1]'
+nmcli -f in-use,bssid,ssid,mode,chan,rate,signal,bars,security -t dev wifi | jq -sR 'split("\n") | map(split("(?<!\\\\):"; "g")) | map({"in-use": .[0], "bssid": .[1], "network": .[2], "mode": .[3], "channel": .[4], "rate": .[5], "signal": .[6], "bars": .[7], "security": .[8]}) | .[0:-1]' | from json
+hx selector.nu
+./selector.nu
+chmod +x selector.nu
+./selector.nu
+hx selector.nu
+./selector.nu
+hx selector.nu
+./selector.nu
+./selector.nu | sort-by signal | uniq-by network
+./selector.nu | table
+./selector.nu
+./selector.nu | uniq-by network
+./selector.nu | uniq
+./selector.nu | table
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | awk -F: 'BEGIN{z[1]="network";z[2]="mode";z[3]="channel";z[4]="rate";z[5]="signal";z[6]="bars";z[7]="security";}{if (NR==1){printf "%s", "[{"}else{printf "%s",",{"}}{for (i=1; i<NF; i++){ printf "\"%s\":\"%s\",",z[i],$i};{ printf "\"%s\":\"%s\"}",z[NF],$NF}}END{print "]"}' | jq . | from json | uniq-by network
+hx selector.nu
+./selector.nu
+./selector.nu | sort-by signal
+hx selector.nu
+./selector.nu
+hx selector.nu
+./selector.nu
+./selector.nu | sort-by signal
+./selector.nu | parse
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | parse
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | parse --help
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi | parse "{ssid}"
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev wifi
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev --color no wifi
+nmcli -f ssid,mode,chan,rate,signal,bars,security -t dev --color off wifi
+nmcli --color=no -f ssid,mode,chan,rate,signal,bars,security -t dev wifi
+nmcli --color=no -f ssidsignal,security -t dev wifi
+nmcli --color=no -f ssid,signal,security -t dev wifi
+nmcli --color=no -t dev wifi
+nmcli --color=no -t dev wifi | table
+nmcli -t dev wifi 
+man nmcli
+nmcli --terse wifi 
+nmcli --terse dev wifi 
+nmcli dev wifi
+nmcli dev wifi | detect columns
+nmcli dev wifi | lines
+nmcli dev wifi --terse
+nmcli dev wifi --terce
+nmcli -t dev wifi 
+nmcli -t dev wifi | parse
+nmcli -t dev wifi | detect
+nmcli -t dev wifi | detect columns 
+nmclidev wifi | detect columns 
+nmcli dev wifi | detect columns 
+nmcli dev wifi --help
+mna nmcli
+man nmcli
+nmcli --fields all dev wifi --help
+nmcli --fields all dev wifi
+nmcli --fields all dev wifi | detect columns 
+nmcli --fields all dev wifi | detect columns | table
+nmcli --fields all dev wifi | detect columns
+nmcli --fields all dev wifi | detect columns | moar
+nmcli --fields all dev wifi | uniq-by SSID-HEX
+nmcli --fields all dev wifi | uniq-by 'SSID-HEX'
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | sort-by SIGNAL
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | sort SIGNAL
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | sort
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | columns 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | fuzzel --dmenu
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID | fuzzel --dmenu
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID | print 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID | printf
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID | echo
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | get SSID | str trim 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | str trim 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | str trim
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | str trim | transpose 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | str trim
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | str trim | lines
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | lines
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX
+$env
+$env | moar
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | columns
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | return SSID
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | return
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | all {|el| $el.SSID != "--" } 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"}
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | lines 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | print 
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | print | fuzzel --dmenu
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | print
+ls
+nmcli --fields all dev wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | print
+nmcli -f 'ssid' --color no device wifi
+nmcli -f 'signal,ssid' --color no device wifi | detect columns 
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | print
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"}
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | print --raw
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | describe 
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | describe
+hx selector.nu
+./selector.nu
+nu selector.nu
+nu selector.nu | fuzzel --dmenu
+nu selector.nu | df
+nu selector.nu | print
+nu selector.nu | select SSID
+hx selector.nu
+nu selector.nu
+nu selector.nu | select SSID
+nu selector.nu
+nu selector.nu | select andplace
+nu selector.nu | select ssid
+nu selector.nu | from nuon 
+nu selector.nu | return 
+hx selector.nu
+date now
+hx selector.nu
+let wifi_list = nmcli -f 'signal,ssid,ssid-hex' device wifi<\n>  | detect columns<\n>  | uniq-by SSID-HEX<\n>  | filter {|x| $x.SSID != "--"}<\n>
+$wifi_list
+$wifi_list | str
+$wifi_list | str upcase
+$wifi_list | format 
+$wifi_list | describe 
+$wifi_list | describe --detailed 
+$wifi_list.SSID
+port
+$wifi_list.SSID | fuzzel --dmenu
+$wifi_list.SSID | into string 
+$wifi_list.SSID | into string | fuzzel --dmenu
+$wifi_list.SSID | into table
+$wifi_list.SSID | into glob 
+$wifi_list.SSID | into record 
+$wifi_list.SSID | into value 
+$wifi_list.SSID | into value | print
+$wifi_list.SSID | into value | fuzzel --dmenu
+$wifi_list.SSID | table 
+$wifi_list.SSID | table --list
+$wifi_list.SSID | table
+$wifi_list.SSID | grid 
+$wifi_list.SSID | grid -c
+$wifi_list.SSID | grid --help
+$wifi_list.SSID | grid -s \n
+$wifi_list.SSID | grid -s "\n"
+$wifi_list.SSID | grid -s "\n" | fuzzel --dmenu
+help
+help commands
+ls
+$wifi_list.SSID | grid -s "\n" | fuzzel --dmenu
+hx selector.nu
+nu selector.nu
+hx selector.nu
+nu selector.nu
+hx selector.nu
+nu selector.nu
+ls
+hx selector.nu
+let wifi_list = nmcli -f 'signal,ssid,ssid-hex' device wifi<\n>  | detect columns<\n>  | uniq-by SSID-HEX<\n>  | filter {|x| $x.SSID != "--"}
+$wifi_list
+$wifi_list | grid -s '\n'
+$wifi_list
+$wifi_list.SSID
+$wifi_list
+$wifi_list | select SSID 
+$wifi_list
+$wifi_list | get ssid
+$wifi_list | get ssid | tofi
+$wifi_list | get ssid | grid -s '\n'
+$wifi_list | get ssid | grid -c '\n'
+$wifi_list | get ssid | grid -c
+$wifi_list | get ssid | grid
+$wifi_list | get ssid | grid -s \n
+$wifi_list | get ssid | grid -s "\n"
+$wifi_list | get ssid | grid -s "\n" | tofi
+$wifi_list | each 
+$wifi_list | each | insert 'pretty_name'
+$wifi_list | append 'pretty_name'
+$wifi_list | append
+$wifi_list
+$wifi_list | drop SSID-HEX
+$wifi_list | drop column
+$wifi_list
+$wifi_list | drop column
+$wifi_list | reject SSID-HEX
+$wifi_list | reject SSID-HEX | grid -s "\n"
+$wifi_list | reject SSID-HEX
+$wifi_list | reject SSID-HEX | select ssid
+$wifi_list | reject SSID-HEX | select SSID
+$wifi_list | reject SSID-HEX | select SSID | grid -s \n
+$wifi_list | reject SSID-HEX | select SSID | grid -s "\n"
+$wifi_list | reject SSID-HEX | select SSID
+$wifi_list | reject SSID-HEX | get SSID
+$wifi_list | reject SSID-HEX | get SSID | grid -s "\n"
+$wifi_list | reject SSID-HEX | get SSID | grid -s "\n" | tofi
+$wifi_list | reject SSID-HEX | get SSID | grid -s "\n"
+let selected_wifi = $wifi_list | reject SSID-HEX | get SSID | grid -s "\n" | tofi
+echo $selected_wifi
+echo $wifi_list
+echo $selected_wifi
+let selected_wifi = $wifi_list | reject SSID-HEX | get SSID | grid -s "\n" | tofi
+echo $selected_wifi
+let selected_wifi = $wifi_list | reject SSID-HEX | get SSID | grid -s "\n" | tofi
+ls
+./selector.nu
+nu selector.nu
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"} | describe
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"}
+exit
+date now
+exit
+phoronix-test-suite system-info | detect columns 
+ls
+ll
+exit
+nmcli -f 'signal,ssid, ssid-hex' --color no device wifi | detect columns | uniq-by SSID-HEX | filter {|x| $x.SSID != "--"}
+exit =
+exit
+logger 
+help logger 
+help log
+help commands 
+help commands | find log
+help commands | find print
+./selector.nu
+nu selector.nu
+map
+mapscrn 
+each
+nu selector.nu
+each
+nu selector.nu
+length 
+[1, 2] | length 
+nu selector.nu
+10 | -1
+10 | math
+10 | math -1
+10 | into string 
+10 | into string | -1
+10 | $in 
+10 | $in - 1
+nu selector.nu
+let names = [Mark Tami Amanda Jeremy]
+$names | enumerate | each { |elt| $"($elt.index + 1) - ($elt.item)" }
+$names | unumerate
+$names | enumerate
+$names
+$names | enumerate
+enumerate --help
+nu selector.nu
+nu selector.nu | descript
+nu selector.nu | describe 
+nu selector.nu
+nu selector.nu | describe 
+nu selector.nu
+help commands | find print
+nu selector.nu
+$names
+$names.1
+$names.2
+$names.3
+$names | insert 'name2' 'ddd'
+$names.index
+$names.#
+$names.
+let $table =[[index number] [bob 1] [jane 2] [charlie 3]]]
+let $table = [[index number] [bob 1] [jane 2] [charlie 3]]]
+$table
+$table.index
+$table | table
+$table | table --index 1
+$table | table --index 2
+$table | table --index 3
+$table | table --index 5
+$table | explore
+$table[index]
+$table.[]
+$table.[index]
+$table.['#']
+$table
+$table | explore --peek
+ls | explore
+nu selector.nu
+nu --debug selector.nu
+[[version patch]; ['0.1.0' false] ['0.1.1' true] ['0.2.0' false]] | debug
+[[version patch]; ['0.1.0' false] ['0.1.1' true] ['0.2.0' false]] | debug | print
+[[version patch]; ['0.1.0' false] ['0.1.1' true] ['0.2.0' false]] | debug
+./selector.nu
+help commands | find print
+./selector.nu
+grid --help
+./selector.nu
+nmcli c
+nmcli connection show
+nmcli connection show -t
+nmcli connection show --help
+nmcli connection show
+./selector.nu
+man fuzzel
+man fuzzel.ini
+man fuzzel
+nu selector.nu
+dls
+ls
+touch sleek-actions
+cat selector.nu
+nu sleek-actions
+./sleek-actions
+chmos +x sleek-actions
+chmod +x sleek-actions
+./sleek-actions
+let ACTIONS = {<\n>  "Disable wifi": "echo 'Disabling wifi'"<\n>  "Enable wifi": "echo 'Enabling wifi'"<\n>}<\n>
+$ACTIONS.Disable wifi
+$ACTIONS."Disable wifi"
+$ACTIONS["Disable wifi"]
+$ACTIONS.["Disable wifi"]
+$ACTIONS."Disable wifi"
+'{ "apples": 543, "bananas": 411, "oranges": 0 }' | from json | select 1
+'{ "apples": 543, "bananas": 411, "oranges": 0 }' | from json | select 2
+'{ "apples": 543, "bananas": 411, "oranges": 0 }' | from json | select 0
+$ACTIONS | columns 
+$ACTIONS | columns | to text
+./sleek-actions
+exit 
+set
+./sleek-actions
+fish
+exit
+open actions.nu
+open actions.nu | to table
+{ "apples": 543, "bananas": 411, "oranges": 0 }
+open --help
+open actions.nu | from nuon
+hx sleek-actions
+./sleek-actions
+ls
+exit
+open ./actions.nu | from nuon
+exit
+hx /home/izzqz/.config/nushell/config.nu:230:21
+exit
+nu
+exit
+ls
+exit
+echo -n "$PATH"
+echo -n $env.PATH
+echo $env.PATH
+ls
+ll
+ls
+exiy
+exit
+i3status-rs
+i3status-rs | input list
+i3status-rs | input list --multy
+i3status-rs | input list --multi
+i3status-rs | input list --multi 
+i3status-rs | input list --multi 'd'
+exit
+i3status-rs
+i3status-rs | from json
+i3status-rs | decode
+i3status-rs | decode utf-8
+i3status-rs | decode json
+i3status-rs | decode utf-8 | to json
+i3status-rs | decode utf-8 | from json
+i3status-rs | decode utf-8 | from msgpack 
+i3status-rs | decode utf-8 | from ssv 
+i3status-rs | decode utf-8 | from json 
+i3status-rs | decode utf-8 | echo 
+i3status-rs | decode utf-8 | print 
+ls
+hx translate.nu
+ls
+hx translate.nu
+./translate.nu
+chmod +x translate.nu
+./translate.nu
+hx translate.nu
+./translate.nu
+printf
+printf dd
+print dd
+hx translate.nu
+./translate.nu
+echo 'dd' | ./translate.nu
+hx translate.nu
+echo 'dd' | ./translate.nu
+hx translate.nu
+echo 'dd' | ./translate.nu
+'dd' | ./translate.nu
+hx translate.nu
+'dd' | ./translate.nu
+hx translate.nu
+'dd' | ./translate.nu
+hx translate.nu
+'dd' | ./translate.nu
+"hello" | ./translate.nu
+cd scratch/
+ls
+nu translate.nu
+nu translate.nu 'dd'
+nu translate.nu dd
+nu translate.nu
+nu translate.nu dd
+nu translate.nu
+'' | from json 
+'' | to json 
+'' | to text 
+hx translate.nu
+'' | to text 
+./translate.nu
+'' | ./translate.nu
+'dafd' | ./translate.nu
+'hahah' | ./translate.nu
+hx translate.nu
+'hahah' | ./translate.nu
+echo 'hahah' | ./translate.nu
+'hahah' | ./translate.nu
+./tra
+'hahah' | ./translate.nu
+i3status-rs | ./translate.nu
+ping 8.8.8.8 | each {|i| print ($i | parse -r "(?P<time>time=)(?P<ms>.*)")}
+ping 8.8.8.8 | each {|i| print ($i)}
+i3status-rust | each {|i| print ($i)}
+i3status-rs | each {|i| print ($i)}
+./translate.nu
+hgh
+./translate.nu
+let input = `[{"full_text":" 墳 ","color":"#FFFFFFFF","name":"0","instance":"0:","separator":false,"separator_block_width":0,"markup":"pango"},{"full_text":"40% ","color":"#FFFFFFFF","name":"0","instance":"0:","markup":"pango"},{"full_text":"⣿ SPb1703","color":"#808080FF","name":"1","instance":"1:","markup":"pango"},{"full_text":"<span color='#006100'> </span> 100%","color":"#FFFFFFFF","name":"2","instance":"2:","markup":"pango"},{"full_text":"<span color='gray'>Thu 05/12</span> 17:58","color":"#FFFFFFFF","name":"3","instance":"3:","markup":"pango"}],`
+echo $input
+let input = '[{"full_text":" 墳 ","color":"#FFFFFFFF","name":"0","instance":"0:","separator":false,"separator_block_width":0,"markup":"pango"},{"full_text":"40% ","color":"#FFFFFFFF","name":"0","instance":"0:","markup":"pango"},{"full_text":"⣿ SPb1703","color":"#808080FF","name":"1","instance":"1:","markup":"pango"},{"full_text":"<span color="#006100"> </span> 100%","color":"#FFFFFFFF","name":"2","instance":"2:","markup":"pango"},{"full_text":"<span color='gray'>Thu 05/12</span> 17:58","color":"#FFFFFFFF","name":"3","instance":"3:","markup":"pango"}],'
+echo $input
+$input | str trim
+$input | str trim --char ','
+$input | str trim --char ',' | from json
+$input | str trim --char ',' | srt trim | from json
+$input | str trim --char ',' | str trim | from json
+$input | str trim --char ',' | str trim | from nuon
+echo $input
+echo $input | wl-copy
+$input | parce
+$input | parse
+$input | parse --help
+$input | parse --regex 'full_text"\s*:\s*"((?:[^"\\]|\\.)*)'
+$input | parse --regex 'full_text"\s*:\s*"((?:[^"\\]|\\.)*)' | join
+$input | parse --regex 'full_text"\s*:\s*"((?:[^"\\]|\\.)*)' | join --help
+$input | parse --regex 'full_text"\s*:\s*"((?:[^"\\]|\\.)*)'
+./translate.nu
+./translate.nu curl
+./trunslate.nu i3status-rs
+./translate.nu i3status-rs
+./translate.nu
+i3status-rs | each {|i| print ($i)}
+./translate.nu
+./translate.nu i3status-rs
+./translate.nu curl
+./translate.nu i3status-rs
+./translate.nu
+i3status-rs | ./translate.nu
+./translate.nu i3status-rs
+ls
+exit 
+i3status-rs | ./translate.nu
+i3status-rs | ./i3bar-parse
+exit
+hx translate.nu
+hx i3bar-parse
+./i3bar-parse
+i3status-rs | ./i3bar-parse
+hx i3bar-parse
+./i3bar-parse
+i3status-rs | ./i3bar-parse
+hx i3bar-parse
+i3status-rs | ./i3bar-parse
+exit
